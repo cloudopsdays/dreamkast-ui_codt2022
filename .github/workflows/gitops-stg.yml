@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1.5.2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -60,7 +67,7 @@ jobs:
         with:
           repository: cloudopsdaysjp/dreamkast-infra_codt2022
           path: dreamkast-infra
-          token:  ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Update Kubernetes resources
         uses: cloudnativedaysjp/action-dreamkast-gitops@main
