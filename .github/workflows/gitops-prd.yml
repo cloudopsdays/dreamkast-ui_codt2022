@@ -63,9 +63,9 @@ jobs:
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
 
       - name: Checkout dreamkast-infra_codt2022
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          repository: cloudopsdaysjp/dreamkast-infra_codt2022
+          repository: cloudopsdays/dreamkast-infra_codt2022
           path: dreamkast-infra
           token: ${{ steps.generate_token.outputs.token }}
 
@@ -94,7 +94,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          repository: cloudopsdaysjp/dreamkast-infra_codt2022
+          repository: cloudopsdays/dreamkast-infra_codt2022
           directory: dreamkast-infra
           branch: production/ui-main
 
@@ -104,7 +104,7 @@ jobs:
           github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           script: |
             const pr = await github.pulls.create({
-              owner: "cloudopsdaysjp",
+              owner: "cloudopsdays",
               repo: "dreamkast-infra_codt2022",
               title: "Automated PR (production/ui-main)",
               body: "**this PR is automatically created & merged**",
@@ -112,7 +112,7 @@ jobs:
               base: "main"
             });
             await github.pulls.merge({
-              owner: "cloudopsdaysjp",
+              owner: "cloudopsdays",
               repo: "dreamkast-infra_codt2022",
               pull_number: pr.data.number,
               merge_method: "merge",
