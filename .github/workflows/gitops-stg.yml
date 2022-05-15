@@ -2,6 +2,10 @@ name: GitOps for staging
 
 on:
   push:
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/gitops-stg.yml'
+      - '**.md'
     branches:
     - main
 
@@ -10,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Generate token
         id: generate_token
@@ -101,7 +105,7 @@ jobs:
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v2"
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.pulls.create({
               owner: "cloudopsdays",
