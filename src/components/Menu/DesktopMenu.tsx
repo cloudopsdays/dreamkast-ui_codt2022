@@ -13,6 +13,12 @@ export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
   return (
     <Styled.DesktopMenu>
       <CommonStyled.MenuLink
+        href={`/${event?.abbr}/ui#booths`}
+        rel="noreferrer"
+      >
+        <Button style={{ color: '#423A57' }}>Booths</Button>
+      </CommonStyled.MenuLink>
+      <CommonStyled.MenuLink
         href={`/${event?.abbr}/ui/discussionboard`}
         rel="noreferrer"
       >

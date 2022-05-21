@@ -16,6 +16,7 @@ import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
+import { Booths } from '../Booths'
 
 type Props = {
   event: Event
@@ -171,6 +172,9 @@ export const TrackView: React.FC<Props> = ({
           changeLiveMode={onChecked}
           selectTalk={selectTalk}
         />
+      </Grid>
+      <Grid item xs={12} md={12}>
+        <Booths event={event} openNewWindow={true} />
       </Grid>
     </Grid>
   )
