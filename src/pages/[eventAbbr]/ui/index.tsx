@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { Layout } from '../../../components/Layout'
-import { TrackSelector } from '../../../components/TrackSelector'
 import { TrackView } from '../../../components/Track'
-import { isStorageAvailable } from '../../../util/sessionstorage'
 import {
   Track,
   TrackApi,
@@ -20,14 +18,8 @@ const IndexPage: React.FC = () => {
 
   // States
   const [selectedTrack, setSelectedTrack] = useState<Track>()
-  const [tracks, setTracks] = useState<Track[]>([])
   const [profile, setProfile] = useState<Profile>()
   const [event, setEvent] = useState<Event>()
-
-  // Handlers
-  const selectTrack = (selectedTrack: Track) => {
-    setSelectedTrack(selectedTrack)
-  }
 
   useEffect(() => {
     if (router.asPath !== router.route) {
@@ -75,18 +67,7 @@ const IndexPage: React.FC = () => {
       new Configuration({ basePath: window.location.origin }),
     )
     const { data } = await api.apiV1TracksGet(eventAbbr)
-    setTracks(data)
-
-    if (isStorageAvailable('sessionStorage')) {
-      setSelectedTrack(
-        ((tracks) => {
-          const num = sessionStorage.getItem('view_track_id') || tracks[0].id
-          return tracks.find((track) => track.id == num)
-        })(data),
-      )
-    } else {
-      setSelectedTrack(data[0])
-    }
+    setSelectedTrack(data[0])
   }, [eventAbbr])
 
   useEffect(() => {
@@ -100,11 +81,6 @@ const IndexPage: React.FC = () => {
   if (!!event) {
     return (
       <Layout title={event.name} event={event}>
-        <TrackSelector
-          tracks={tracks}
-          selectedTrack={selectedTrack}
-          selectTrack={selectTrack}
-        />
         <TrackView
           event={event}
           profile={profile}
