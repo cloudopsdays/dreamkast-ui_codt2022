@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { IvsPlayer } from '../IvsPlayer'
+import { Player } from '../Player'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import {
@@ -149,7 +149,7 @@ export const TrackView: React.FC<Props> = ({
   return (
     <Grid container spacing={0} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <IvsPlayer playBackUrl={videoId} autoplay={true}></IvsPlayer>
+        <Player vimeoId={videoId} autoplay={true}></Player>
         <Sponsors event={event} />
       </Grid>
       <Grid item xs={12} md={4}>
@@ -157,9 +157,7 @@ export const TrackView: React.FC<Props> = ({
       </Grid>
       <Grid item xs={12} md={8} style={{ height: '100%' }}>
         <TalkInfo
-          event={event}
           selectedTalk={selectedTalk}
-          selectedTrackName={selectedTrack?.name}
           selectedTrackId={selectedTrack?.id}
         />
       </Grid>
