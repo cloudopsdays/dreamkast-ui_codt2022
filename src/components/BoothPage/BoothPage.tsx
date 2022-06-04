@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   Booth as BoothInterface,
-  BoothPdfUrls as BoothPdfUrlsInterface,
+  BoothPdfUrlsInner as BoothPdfUrlsInterface,
   BoothApi,
   Configuration,
 } from '../../client-axios'
@@ -12,6 +12,7 @@ import { Button } from '@material-ui/core'
 import AttachmentPdfs from './internal/AttachmentPdfs'
 import { AttachmentImages } from './internal/AttachmentImages/AttachmentImages'
 import { Miro } from '../../components/Miro'
+import AttachmentVimeos from './internal/AttachmentVimeos'
 
 type Props = {
   boothId?: string
@@ -21,6 +22,7 @@ export class BoothPdf implements BoothPdfUrlsInterface {
   url?: string
   title?: string
 }
+
 export class Booth implements BoothInterface {
   id: number
   sponsorId: number
@@ -31,7 +33,7 @@ export class Booth implements BoothInterface {
   abbr: string
   text: string
   logoUrl: string
-  vimeoUrl: string
+  vimeoUrls?: Array<string>
   miroUrl: string
   pdfUrls: Array<BoothPdf>
   keyImageUrls: Array<string>
@@ -45,7 +47,7 @@ export class Booth implements BoothInterface {
     abbr: string,
     text: string,
     logoUrl: string,
-    vimeoUrl: string,
+    vimeoUrls: Array<string>,
     miroUrl: string,
     pdfUrls: Array<BoothPdf>,
     keyImageUrls: Array<string>,
@@ -60,7 +62,7 @@ export class Booth implements BoothInterface {
     this.abbr = abbr
     this.text = text
     this.logoUrl = logoUrl
-    this.vimeoUrl = vimeoUrl
+    this.vimeoUrls = vimeoUrls
     this.miroUrl = miroUrl
     this.pdfUrls = pdfUrls
     this.keyImageUrls = keyImageUrls
@@ -153,20 +155,7 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
               />
             </Grid>
           )}
-          {booth?.vimeoUrl && (
-            <Grid item xs={12}>
-              <Styled.VimeoContainer>
-                <Styled.VimeoIframe
-                  src={booth?.vimeoUrl}
-                  width="100%"
-                  height="360"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen
-                ></Styled.VimeoIframe>
-              </Styled.VimeoContainer>
-            </Grid>
-          )}
+          {booth?.vimeoUrls && <AttachmentVimeos urls={booth?.vimeoUrls} />}
           {booth?.pdfUrls && (
             <Grid item xs={12}>
               <CommonStyled.Header2 centerized={true}>

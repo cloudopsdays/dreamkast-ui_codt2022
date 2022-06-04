@@ -528,7 +528,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ChatMessageProperties'
       required:
-        - [eventAbbr]
+        - eventAbbr
         - roomId
         - body
         - messageType
@@ -542,7 +542,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ChatMessageProperties'
       required:
-        - [eventAbbr]
+        - eventAbbr
         - body
     ChatMessageProperties:
       type: object
@@ -639,8 +639,10 @@ components:
           type: string
         logoUrl:
           type: string
-        vimeoUrl:
-          type: string
+        vimeoUrls:
+          type: array
+          items:
+            type: string
         miroUrl:
           type: string
         pdfUrls:

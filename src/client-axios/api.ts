@@ -24,6 +24,19 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface ApiV1ChatMessagesMessageIdPut403Response
+ */
+export interface ApiV1ChatMessagesMessageIdPut403Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiV1ChatMessagesMessageIdPut403Response
+     */
+    'error'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Booth
  */
 export interface Booth {
@@ -83,10 +96,10 @@ export interface Booth {
     'logoUrl': string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof Booth
      */
-    'vimeoUrl': string;
+    'vimeoUrls'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -95,10 +108,10 @@ export interface Booth {
     'miroUrl': string;
     /**
      * 
-     * @type {Array<BoothPdfUrls>}
+     * @type {Array<BoothPdfUrlsInner>}
      * @memberof Booth
      */
-    'pdfUrls': Array<BoothPdfUrls>;
+    'pdfUrls': Array<BoothPdfUrlsInner>;
     /**
      * 
      * @type {Array<string>}
@@ -109,19 +122,19 @@ export interface Booth {
 /**
  * 
  * @export
- * @interface BoothPdfUrls
+ * @interface BoothPdfUrlsInner
  */
-export interface BoothPdfUrls {
+export interface BoothPdfUrlsInner {
     /**
      * 
      * @type {string}
-     * @memberof BoothPdfUrls
+     * @memberof BoothPdfUrlsInner
      */
     'url'?: string;
     /**
      * 
      * @type {string}
-     * @memberof BoothPdfUrls
+     * @memberof BoothPdfUrlsInner
      */
     'title'?: string;
 }
@@ -193,14 +206,12 @@ export interface ChatMessage {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ChatMessageMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const ChatMessageMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type ChatMessageMessageTypeEnum = typeof ChatMessageMessageTypeEnum[keyof typeof ChatMessageMessageTypeEnum];
 
 /**
  * 
@@ -270,14 +281,12 @@ export interface ChatMessageProperties {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ChatMessagePropertiesMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const ChatMessagePropertiesMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type ChatMessagePropertiesMessageTypeEnum = typeof ChatMessagePropertiesMessageTypeEnum[keyof typeof ChatMessagePropertiesMessageTypeEnum];
 
 /**
  * 
@@ -347,42 +356,29 @@ export interface Event {
     'coc': string;
     /**
      * 
-     * @type {Array<EventConferenceDays>}
+     * @type {Array<EventConferenceDaysInner>}
      * @memberof Event
      */
-    'conferenceDays'?: Array<EventConferenceDays>;
+    'conferenceDays'?: Array<EventConferenceDaysInner>;
 }
 /**
  * 
  * @export
- * @interface EventConferenceDays
+ * @interface EventConferenceDaysInner
  */
-export interface EventConferenceDays {
+export interface EventConferenceDaysInner {
     /**
      * 
      * @type {number}
-     * @memberof EventConferenceDays
+     * @memberof EventConferenceDaysInner
      */
     'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof EventConferenceDays
+     * @memberof EventConferenceDaysInner
      */
     'date'?: string;
-}
-/**
- * 
- * @export
- * @interface InlineResponse403
- */
-export interface InlineResponse403 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse403
-     */
-    'error'?: string;
 }
 /**
  * 
@@ -521,10 +517,10 @@ export interface Talk {
     'abstract': string;
     /**
      * array of speakers name
-     * @type {Array<TalkSpeakers>}
+     * @type {Array<TalkSpeakersInner>}
      * @memberof Talk
      */
-    'speakers': Array<TalkSpeakers>;
+    'speakers': Array<TalkSpeakersInner>;
     /**
      * 
      * @type {number}
@@ -595,19 +591,19 @@ export interface Talk {
 /**
  * 
  * @export
- * @interface TalkSpeakers
+ * @interface TalkSpeakersInner
  */
-export interface TalkSpeakers {
+export interface TalkSpeakersInner {
     /**
      * 
      * @type {number}
-     * @memberof TalkSpeakers
+     * @memberof TalkSpeakersInner
      */
     'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof TalkSpeakers
+     * @memberof TalkSpeakersInner
      */
     'name'?: string;
 }
@@ -710,14 +706,12 @@ export interface UpdateChatMessage {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum UpdateChatMessageMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const UpdateChatMessageMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type UpdateChatMessageMessageTypeEnum = typeof UpdateChatMessageMessageTypeEnum[keyof typeof UpdateChatMessageMessageTypeEnum];
 
 /**
  * 
@@ -868,7 +862,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
          * @throws {RequiredError}
          */
         apiV1ChatMessagesGet: async (eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1ChatMessagesGet', 'eventAbbr', eventAbbr)
             // verify required parameter 'roomId' is not null or undefined
             assertParamExists('apiV1ChatMessagesGet', 'roomId', roomId)
@@ -1140,7 +1134,7 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         apiV1EventsEventAbbrGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1EventsEventAbbrGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/events/{eventAbbr}`
                 .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
@@ -1241,7 +1235,7 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1EventAbbrMyProfileGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/${eventAbbr}/my_profile`
                 .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
@@ -1342,7 +1336,7 @@ export const SponsorApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         apiV1SponsorsGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1SponsorsGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/sponsors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1448,7 +1442,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * @throws {RequiredError}
          */
         apiV1TalksGet: async (eventAbbr: string, trackId?: string, conferenceDayIds?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1TalksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/talks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1629,7 +1623,7 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         apiV1TracksGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter '[eventAbbr]' is not null or undefined
+            // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1TracksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/tracks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
