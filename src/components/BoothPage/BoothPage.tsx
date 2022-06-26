@@ -93,7 +93,7 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
           name: booth?.sponsorName,
           id: booth?.id,
         })
-      }, 120 * 1000),
+      }, 60 * 1000),
     )
   }, [booth])
 

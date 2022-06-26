@@ -142,7 +142,7 @@ export const TrackView: React.FC<Props> = ({
           talk_id: selectedTalk?.id,
           talk_name: selectedTalk?.title,
         })
-      }, 120 * 1000),
+      }, 60 * 1000),
     )
   }, [selectedTrack, selectedTalk])
 
