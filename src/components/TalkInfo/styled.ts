@@ -43,6 +43,7 @@ export const Content = styled.div`
   height: 230px;
   font-size: 1.1em;
   overflow-y: scroll;
+  white-space: pre-wrap;
   &::-webkit-scrollbar {
     width: 12px;
   }
